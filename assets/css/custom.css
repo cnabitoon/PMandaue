@@ -1,0 +1,78 @@
+.home
+{
+    background-color:#2b2b2b;
+    overflow-x:hidden;
+    /*overflow-x:hidden;
+    overflow-y:scroll;*/
+}
+.hotup
+{
+    color:white;
+}
+
+.ttl
+{
+    font-size:40px;
+    color:#ffffff;
+    margin-right:20px;
+    margin-left:10px;
+    margin-top:10px;
+    font-family:Monospace;
+    font-weight:900;
+}
+.white
+{
+    color:white;
+    font-size:16px;
+}
+.corner
+{
+    background: #ffffff;
+    padding: 10px; 
+    width: 270px;
+    height: 470px; 
+    overflow-y:scroll;
+}
+.navbar-toggle:collapsed
+{
+    background-color:#d61e01;
+    border:none;
+}
+.navbar-default, .container-fluid, .navbar-header, .navbar-toggle
+{
+    background-color:#d61e01;
+    color:white;
+    border:none;
+}
+.btn-log-sign{
+    color:#ffffff;
+    background-color:#2b2b2b;
+    border-color:#ffcccc;
+    margin:10px;
+
+}
+.btn-log-sign:focus,.btn-log-sign.focus
+{
+    color:#ffffff;
+    background-color:#ff6666;
+    border-color:#ffcccc;
+}
+.btn-log-sign:hover
+{
+    color:#ffffff;
+    background-color:#ff6666;
+    border-color:#ffcccc;
+}
+.btn-log-sign:active,.btn-log-sign.active,.open>.dropdown-toggle.btn-log-sign
+{
+    color:#ffffff;
+    background-color:#ff3333;
+    border-color:#ffcccc;
+}
+.btn-log-sign:active:hover,.btn-log-sign.active:hover,.open>.dropdown-toggle.btn-log-sign:hover,.btn-log-sign:active:focus,.btn-log-sign.active:focus,.open>.dropdown-toggle.btn-log-sign:focus,.btn-log-sign:active.focus,.btn-log-sign.active.focus,.open>.dropdown-toggle.btn-log-sign.focus
+{
+    color:#ffffff;background-color:#ff3333;border-color:#ffcccc;
+}
+.btn-log-sign:active,.btn-log-sign.active,.open>.dropdown-toggle.btn-log-sign{background-image:none}
+.btn-log-sign.disabled,.btn-log-sign[disabled],fieldset[disabled] .btn-log-sign,.btn-log-sign.disabled:hover,.btn-log-sign[disabled]:hover,fieldset[disabled] .btn-log-sign:hover,.btn-log-sign.disabled:focus,.btn-log-sign[disabled]:focus,fieldset[disabled] .btn-log-sign:focus,.btn-log-sign.disabled.focus,.btn-log-sign[disabled].focus,fieldset[disabled] .btn-log-sign.focus,.btn-log-sign.disabled:active,.btn-log-sign[disabled]:active,fieldset[disabled] .btn-log-sign:active,.btn-log-sign.disabled.active,.btn-log-sign[disabled].active,fieldset[disabled] .btn-log-sign.active{background-color:#fff;border-color:#ffcccc;}
+.btn-log-sign .badge{color:#fff;background-color:#ffffff}

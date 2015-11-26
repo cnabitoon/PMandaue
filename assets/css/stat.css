@@ -1,0 +1,125 @@
+.num
+{
+	margin-left:120px;
+	color:#ffffff;
+	font-size:16px;
+	font-family:"Verdana",Sans-serif;
+}
+.cent
+{
+	margin:0 auto; 
+	display:table;
+}
+.cen-ali
+{
+	margin:0 auto; 
+	display:table;
+	margin-top:30px;
+	width:240px;
+	height:325px;
+	border-radius:10px 10px 0 0;
+}
+.cen-ali img {
+    position: absolute;
+	margin:0;
+    bottom: 0;
+}
+.cen-ali h4
+{
+	margin-top:3px;
+	margin-left:5px;
+	margin-bottom:0px;
+}
+.cen-ali p
+{
+	margin-left:7px;
+	margin-bottom:0px;
+}
+.cen-ali a
+{
+	margin-left:7px;
+	color:#800000;
+}
+.cen-ali a:hover
+{
+	color:#800000;
+}
+.cen-ali a:visited
+{
+	color:#006400;
+}
+a:hover
+{
+	color:#800000;
+}
+a:visited
+{
+	text-decoration:underline;
+}
+.ongoing
+{
+	background-color:#ea5550;
+	color:#2b2b2b;
+}
+.solved
+{
+	background-color:#9fc24d;
+	color:#2b2b2b;
+}
+.pending
+{
+	background-color:#9fa09e;
+	color:white;
+}
+.fongoing
+{
+	color:#ea5550;
+	font-weight:800;
+}
+.fsolved
+{
+	color:#9fc24d;
+	font-weight:800;
+}
+.fpending
+{
+	color:#9fa09e;
+	font-weight:800;
+}
+.fon
+{
+	color:#ffffff;
+	font-size:16px;
+	font-family:"Verdana",Sans-serif;
+}
+.btn-sub{
+	color:#ffffff;
+	background-color:#d61e01;
+	border-color:#ffcccc;
+	margin:10px;
+}
+.btn-sub:focus,.btn-sub.focus
+{
+	color:#ffffff;
+	background-color:#ff6666;
+	border-color:#ffcccc;
+}
+.btn-sub:hover
+{
+	color:#ffffff;
+	background-color:#ff6666;
+	border-color:#ffcccc;
+}
+.btn-sub:active,.btn-sub.active,.open>.dropdown-toggle.btn-sub
+{
+	color:#ffffff;
+	background-color:#ff3333;
+	border-color:#ffcccc;
+}
+.btn-sub:active:hover,.btn-sub.active:hover,.open>.dropdown-toggle.btn-sub:hover,.btn-sub:active:focus,.btn-sub.active:focus,.open>.dropdown-toggle.btn-sub:focus,.btn-sub:active.focus,.btn-sub.active.focus,.open>.dropdown-toggle.btn-sub.focus
+{
+color:#ffffff;background-color:#ff3333;border-color:#ffcccc;
+}
+.btn-sub:active,.btn-sub.active,.open>.dropdown-toggle.btn-sub{background-image:none}
+.btn-sub.disabled,.btn-sub[disabled],fieldset[disabled] .btn-sub,.btn-sub.disabled:hover,.btn-sub[disabled]:hover,fieldset[disabled] .btn-sub:hover,.btn-sub.disabled:focus,.btn-sub[disabled]:focus,fieldset[disabled] .btn-sub:focus,.btn-sub.disabled.focus,.btn-sub[disabled].focus,fieldset[disabled] .btn-sub.focus,.btn-sub.disabled:active,.btn-sub[disabled]:active,fieldset[disabled] .btn-sub:active,.btn-sub.disabled.active,.btn-sub[disabled].active,fieldset[disabled] .btn-sub.active{background-color:#d65945;border-color:#ffcccc;}
+.btn-sub .badge{color:#fff;background-color:#ffffff}
