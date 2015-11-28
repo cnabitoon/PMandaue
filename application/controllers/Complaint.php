@@ -8,19 +8,30 @@ class Complaint extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
-        if (!$this->session->userdata('user_id')) {
-            redirect('login');
-            //$this->generate_page('login',['errors' => ['Please login to post a complaint']]);
-        }
         $this->load->library('form_validation');
+    }
+    
+    public function index(){
+        redirect();
     }
 
     public function post() {
         $this->tab_title = 'Post Complaint';
 
+        if(!$this->session->userdata('user_id')) {
+            $this->session->set_flashdata('errors', ['Please login to post a complaint']);
+            $this->session->set_flashdata('redirect', 'complaint-post');
+            redirect('login');
+        }
+        
+        if($this->session->userdata('type') == 'sa' || $this->session->userdata('type') == 'g'){
+            $this->session->set_flashdata('infos', ['Post Complaint is only available for user accounts']);
+            redirect();
+        }
+        
         $errors = FALSE;
         if ($this->input->method(TRUE) === 'GET') {
-            $this->generate_page('post-complaint', ['errors' => $errors]);
+            $this->generate_page('complaint-post', ['errors' => $errors]);
         } else { //POST
             $this->load->model('Complaint_model', 'complaint');
             $this->load->helper('array');
@@ -30,7 +41,7 @@ class Complaint extends MY_Controller {
 
             if ($this->form_validation->run() == FALSE) {
                 $errors = array_values($this->form_validation->error_array());
-                $this->generate_page('post-complaint', ['errors' => $errors]);
+                $this->generate_page('complaint-post', ['errors' => $errors]);
             }else {  //no form validation errors
                 $input = $this->input->post();
                 $complaint = elements(['category', 'title', 'description'], $input);
@@ -43,16 +54,21 @@ class Complaint extends MY_Controller {
                 $complaint['poster_id'] = $this->session->user_id;
                 if(isset($_POST['is_anonymous'])){
                     $complaint['is_anonymous'] = 1;
-                }else{
-                    $complaint['is_anonymous'] = 0;
                 }
-                if ($this->complaint->create($complaint)){
+                if ($this->complaint->add($complaint)){
                     echo "Complaint created.";
                 } else {
                     echo "Complaint creation failed.";
                 }
             }
         }
+    }
+    
+    public function view_all() {
+        $this->tab_title = 'View All Complaints';
+        //$this->load->model('Complaint_model','complaint');
+        //$complaints = $this->complaint->get_all_accepted();
+        $this->generate_page('complaint-view-all');
     }
 
     function handle_upload() {

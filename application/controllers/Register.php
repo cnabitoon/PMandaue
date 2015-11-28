@@ -9,6 +9,9 @@ class Register extends MY_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('form_validation');
+        if ($this->session->userdata('user_id')) {
+            redirect('home');
+        }
     }
 
     public function index() {
@@ -21,7 +24,7 @@ class Register extends MY_Controller {
             $this->form_validation->set_rules('firstname', 'First Name', 'required');
             $this->form_validation->set_rules('lastname', 'Last Name', 'required');
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[account.email]');
-            $this->form_validation->set_rules('contact_number', 'Contact Number', 'required|exact_length[11]');
+            $this->form_validation->set_rules('contact_number', 'Contact Number', 'required|exact_length[11]|is_unique[account.contact_number]');
             $this->form_validation->set_rules('password', 'Password', 'required');
             $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|matches[password]');
 
@@ -34,7 +37,7 @@ class Register extends MY_Controller {
                 $account['password_salt'] = uniqid();
                 $account['password_hash'] = md5($input['password'] . $account['password_salt']);
                 $account['verification_code'] = random_string('alnum', 6);
-                if ($this->account->create($account)) {
+                if ($this->account->add($account)) {
                     echo "Account created.";
                 } else {
                     echo "Account creation failed.";

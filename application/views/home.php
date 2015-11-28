@@ -3,8 +3,13 @@
         <image src="<?= base_url('assets/image/map.png') ?>" style="border: 3px solid #999999;"/>
     </div>	
     <div class="col-sm-5" style="margin:10px;">
-
-
+        <?php if ($infos): ?>
+            <div class="alert alert-info">
+                <ul>
+                    <li> <?= implode($infos, '</li><li>') ?></li>
+                </ul>
+            </div>
+        <?php endif; ?>
         <div class="row">
             <div class="col-sm-6">
                 <div class="panel panel-default">

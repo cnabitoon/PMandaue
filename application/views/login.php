@@ -19,6 +19,9 @@
                         <label>Password</label>
                         <input type="password" name="password" class="form-control"/>
                     </div>
+                    <div class="form-group">
+                        <input type="hidden" name="redirect" value="<?= $redirect ?>" class="form-control"/>
+                    </div>
                 </div>
                 <div class="panel-footer">
                     <div class="btn-toolbar clearfix">
