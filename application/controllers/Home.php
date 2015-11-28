@@ -7,11 +7,9 @@ class Home extends MY_Controller {
     protected $tab_title = 'Home';
 
     public function index() {
-        $infos = FALSE;
-        if (isset($_SESSION['infos'])) {
-            $infos = $_SESSION['infos'];
-        }
-        $this->generate_page('home',['infos' => $infos]);
+        $infos = isset($_SESSION['infos']) ? $_SESSION['infos'] : FALSE;
+        $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : FALSE;
+        $this->generate_page('home',['infos' => $infos, 'errors' => $errors]);
     }
 
 }

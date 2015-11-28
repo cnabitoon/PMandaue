@@ -10,6 +10,13 @@
                 </ul>
             </div>
         <?php endif; ?>
+        <?php if ($errors): ?>
+            <div class="alert alert-danger">
+                <ul>
+                    <li> <?= implode($errors, '</li><li>') ?></li>
+                </ul>
+            </div>
+        <?php endif; ?>
         <div class="row">
             <div class="col-sm-6">
                 <div class="panel panel-default">

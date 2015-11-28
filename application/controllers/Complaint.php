@@ -10,29 +10,29 @@ class Complaint extends MY_Controller {
         parent::__construct();
         $this->load->library('form_validation');
     }
-    
-    public function index(){
+
+    public function index() {
         redirect();
     }
 
     public function post() {
         $this->tab_title = 'Post Complaint';
 
-        if(!$this->session->userdata('user_id')) {
-            $this->session->set_flashdata('errors', ['Please login to post a complaint']);
+        if (!$this->session->userdata('user_id')) {
+            $this->session->set_flashdata('errors', ['Please login to post a complaint.']);
             $this->session->set_flashdata('redirect', 'complaint-post');
             redirect('login');
         }
-        
-        if($this->session->userdata('type') == 'sa' || $this->session->userdata('type') == 'g'){
-            $this->session->set_flashdata('infos', ['Post Complaint is only available for user accounts']);
+
+        if ($this->session->userdata('type') == 'sa' || $this->session->userdata('type') == 'g') {
+            $this->session->set_flashdata('errors', ['Post Complaint is only available for user accounts.']);
             redirect();
         }
-        
+
         $errors = FALSE;
         if ($this->input->method(TRUE) === 'GET') {
             $this->generate_page('complaint-post', ['errors' => $errors]);
-        } else { //POST
+        } else {
             $this->load->model('Complaint_model', 'complaint');
             $this->load->helper('array');
             $this->form_validation->set_rules('title', 'Title', 'required');
@@ -42,7 +42,7 @@ class Complaint extends MY_Controller {
             if ($this->form_validation->run() == FALSE) {
                 $errors = array_values($this->form_validation->error_array());
                 $this->generate_page('complaint-post', ['errors' => $errors]);
-            }else {  //no form validation errors
+            } else {
                 $input = $this->input->post();
                 $complaint = elements(['category', 'title', 'description'], $input);
                 $complaint['datetime_posted'] = date('Y-m-d H:i:s');
@@ -52,23 +52,16 @@ class Complaint extends MY_Controller {
                 $complaint['longitude'] = 0;
                 $complaint['image_filename'] = $input['image'];
                 $complaint['poster_id'] = $this->session->user_id;
-                if(isset($_POST['is_anonymous'])){
-                    $complaint['is_anonymous'] = 1;
-                }
-                if ($this->complaint->add($complaint)){
-                    echo "Complaint created.";
+                $complaint['is_anonymous'] = (int) isset($input['is_anonymous']);
+
+                if ($this->complaint->add($complaint)) {
+                    $this->session->set_flashdata('infos', ['Complaint created.']);
+                    redirect();
                 } else {
-                    echo "Complaint creation failed.";
+                    $this->generate_page('complaint-post', ['errors' => 'Complaint creation failed.']);
                 }
             }
         }
-    }
-    
-    public function view_all() {
-        $this->tab_title = 'View All Complaints';
-        //$this->load->model('Complaint_model','complaint');
-        //$complaints = $this->complaint->get_all_accepted();
-        $this->generate_page('complaint-view-all');
     }
 
     function handle_upload() {
@@ -82,17 +75,14 @@ class Complaint extends MY_Controller {
 
         if (isset($_FILES['image']) && !empty($_FILES['image']['name'])) {
             if ($this->upload->do_upload('image')) {
-                // set a $_POST value for 'image' that we can use later
                 $upload_data = $this->upload->data();
                 $_POST['image'] = $upload_data['file_name'];
                 return true;
             } else {
-                // possibly do some clean up ... then throw an error
                 $this->form_validation->set_message('handle_upload', $this->upload->display_errors());
                 return false;
             }
         } else {
-            // throw an error because nothing was uploaded
             $this->form_validation->set_message('handle_upload', "You must upload an image!");
             return false;
         }

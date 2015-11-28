@@ -13,19 +13,19 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3">Category</label>
                     <div class="col-sm-7">
-                        <?= form_dropdown('category', ['e' => 'Environmental', 't' => 'Traffic', 'p' => 'Public Disturbance'], FALSE, 'class="form-control"') ?>
+                        <?= form_dropdown('category', ['e' => 'Environmental', 't' => 'Traffic', 'p' => 'Public Disturbance'], set_value('category'), 'class="form-control"') ?>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">Title</label>
                     <div class="col-sm-7">
-                        <input type="text" name="title" class="form-control"/>
+                        <input type="text" name="title" value="<?php echo set_value('title'); ?>"class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">Description</label>
                     <div class="col-sm-7">
-                        <textarea name="description" class="form-control" rows="4" style="resize: none"></textarea>
+                        <textarea name="description" class="form-control" rows="4" style="resize: none"><?php echo set_value('description'); ?></textarea>
                     </div>
                 </div>
                 <div class="form-group">

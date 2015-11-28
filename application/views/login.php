@@ -4,6 +4,13 @@
             <div class="panel-heading"><i class="glyphicon glyphicon-lock pull-right"></i>Login</div>
             <form action="<?= base_url('login') ?>" method="POST">
                 <div class="panel-body">
+                    <?php if ($infos): ?>
+                        <div class="alert alert-info">
+                            <ul>
+                                <li> <?= implode($infos, '</li><li>') ?></li>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
                     <?php if ($errors): ?>
                         <div class="alert alert-danger">
                             <ul>

@@ -12,43 +12,36 @@ class Login extends MY_Controller {
     }
 
     public function index() {
-        $errors = FALSE;
-        $redirect = 'none';
+        $infos = isset($_SESSION['infos']) ? $_SESSION['infos'] : FALSE;
+        $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : FALSE;
+        $redirect = isset($_SESSION['redirect']) ? $_SESSION['redirect'] : FALSE;
         if ($this->input->method(TRUE) === 'GET') {
-            if (isset($_SESSION['errors'])) {
-                $errors = $_SESSION['errors'];
-            }
-            if (isset($_SESSION['redirect'])) {
-                $redirect = $_SESSION['redirect'];
-            }
-            $this->generate_page('login', ['errors' => $errors, 'redirect' => $redirect]);
-        } else {  //POST
+            $this->generate_page('login', ['infos' => $infos, 'errors' => $errors, 'redirect' => $redirect]);
+        } else {
             $this->load->model('Account_model', 'account');
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_existing_email|callback_verified_email');
             $this->form_validation->set_rules('password', 'Password', 'required');
             $input = $this->input->post();
             if ($this->form_validation->run() == FALSE) {
                 $errors = array_values($this->form_validation->error_array());
-                if (isset($input['redirect'])) {
-                    $redirect = $input['redirect'];
-                }
-                $this->generate_page('login', ['errors' => $errors, 'redirect' => $redirect]);
-            } else {  //no form validation errors
+                $this->generate_page('login', ['infos' => $infos, 'errors' => $errors, 'redirect' => $redirect]);
+            } else {
                 $account = $this->account->login($input['email'], $input['password']);
-                if ($account) {   //login successfull
+                if ($account) {
                     $account['user_id'] = $account['id'];
                     unset($account['id']);
                     $this->session->set_userdata($account);
                     if ($input['redirect'] === 'complaint-post' && $account['type'] === 'u') {
                         redirect('complaint/post');
+                    } else if ($input['redirect'] === 'complaint-post' &&
+                            ($account['type'] === 'g' || $account['type'] === 'sa')) {
+                        $this->session->set_flashdata('errors', ['Post Complaint is only available for user accounts.']);
+                        redirect('home');
                     } else {
                         redirect();
                     }
                 } else {
-                    if (isset($input['redirect'])) {
-                        $redirect = $input['redirect'];
-                    }
-                    $this->generate_page('login', ['errors' => ['Invalid username/password.'], 'redirect' => $redirect]);
+                    $this->generate_page('login', ['infos' => $infos, 'errors' => ['Invalid username/password.'], 'redirect' => $redirect]);
                 }
             }
         }

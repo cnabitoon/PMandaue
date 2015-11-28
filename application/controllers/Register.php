@@ -10,7 +10,7 @@ class Register extends MY_Controller {
         parent::__construct();
         $this->load->library('form_validation');
         if ($this->session->userdata('user_id')) {
-            redirect('home');
+            redirect();
         }
     }
 
@@ -18,7 +18,7 @@ class Register extends MY_Controller {
         $errors = FALSE;
         if ($this->input->method(TRUE) === 'GET') {
             $this->generate_page('register', ['errors' => $errors]);
-        } else {  //POST
+        } else {
             $this->load->model('Account_model', 'account');
             $this->load->helper(['string', 'array']);
             $this->form_validation->set_rules('firstname', 'First Name', 'required');
@@ -31,16 +31,17 @@ class Register extends MY_Controller {
             if ($this->form_validation->run() == FALSE) {
                 $errors = array_values($this->form_validation->error_array());
                 $this->generate_page('register', ['errors' => $errors]);
-            }else{  //no form validation errors
+            }else{
                 $input = $this->input->post();
                 $account = elements(['firstname', 'lastname', 'email', 'contact_number'], $input);
                 $account['password_salt'] = uniqid();
                 $account['password_hash'] = md5($input['password'] . $account['password_salt']);
                 $account['verification_code'] = random_string('alnum', 6);
                 if ($this->account->add($account)) {
-                    echo "Account created.";
+                    $this->session->set_flashdata('infos', ['Account created.','Please check your email for verification link.']);
+                    redirect('login');
                 } else {
-                    echo "Account creation failed.";
+                    $this->generate_page('register', ['errors' => 'Account creation failed.']);
                 }
             }
         }
