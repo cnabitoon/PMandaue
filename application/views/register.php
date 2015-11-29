@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-3">Mobile number</label>
+                    <label class="control-label col-sm-3">Mobile Number</label>
                     <div class="col-sm-7">
                         <input type="number" name="contact_number" value="<?php echo set_value('contact_number'); ?>" class="form-control" />
                     </div>

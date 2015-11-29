@@ -20,6 +20,16 @@ class Account_model extends CI_Model {
         return $this->db->get()->row_array();
         
     }
+    
+    public function get_fullname($id){
+        $this->db->select('firstname, lastname');
+        $this->db->from('account');
+        $this->db->where('id', $id);
+        $result = $this->db->get()->row_array();
+        return $result['firstname'] . " " . $result['lastname'];
+    }
+
+
     public function is_existing($email){
         return $this->db->select('id')->from('account')->where('email',$email)->get()->num_rows() > 0;
     }

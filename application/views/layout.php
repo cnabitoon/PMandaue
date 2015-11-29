@@ -6,11 +6,11 @@
         <link rel="shortcut icon" type="image/x-icon" href="<?= base_url('image/icon4.ico') ?>" /> 
         <link href="<?= base_url('assets/css/custom.css') ?>" rel="stylesheet">
         <link href="<?= base_url('assets/css/bootstrap.min.css') ?>" rel="stylesheet">
-        <link type="text/css" rel="stylesheet" href="<?= base_url('assets/css/login-form.css') ?>" />
-        <script type="text/javascript" src="<?= base_url('assets/js/jquery-1.11.0.min.js') ?>"></script>
+        <link href="<?= base_url('assets/css/font-awesome.min.css') ?>" rel="stylesheet" />
+        <link href="<?= base_url('assets/css/login-form.css') ?>" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="<?= base_url('assets/js/jquery.min.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/js/jquery.leanModal.min.js') ?>"></script>
-        <link rel="stylesheet" href="<?= base_url('assets/css/font-awesome.min.css') ?>" />
-        <script src="<?= base_url('assets/js/bootstrap.min.js') ?>"></script>
+        <script type="text/javascript" src="<?= base_url('assets/js/bootstrap.min.js') ?>"></script>
     </head>
     <body>
         <nav class="navbar navbar-default navbar-static-top" style="">
@@ -29,7 +29,18 @@
                         <li class="<?= active_nav_home() ?>"><a href="<?= base_url() ?>">Home</a></li>
                         <li><a href="#">Complaints</a></li>
                         <li><a href="#">Statistics</a></li>
+
                         <li class="<?= active_nav_2('complaint', 'post') ?>"><a href="<?= base_url('complaint/post') ?>">Post Complaint</a></li>
+                        <?php if ($this->session->userdata('type') === 'sa'): ?>
+                            <li class="<?= active_nav_2('super-admin', 'complaint') ?>">
+                                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    Maintain <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="<?= base_url("super-admin/complaint?type=pending") ?>">Complaints</a></li>
+                                </ul>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <?php if (!$this->session->userdata('user_id')): ?>

@@ -21,8 +21,8 @@ class Register extends MY_Controller {
         } else {
             $this->load->model('Account_model', 'account');
             $this->load->helper(['string', 'array']);
-            $this->form_validation->set_rules('firstname', 'First Name', 'required');
-            $this->form_validation->set_rules('lastname', 'Last Name', 'required');
+            $this->form_validation->set_rules('firstname', 'First Name', 'required|regex_match[/^[a-zA-Z\s]*$/]');
+            $this->form_validation->set_rules('lastname', 'Last Name', 'required|regex_match[/^[a-zA-Z\s]*$/]');
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[account.email]');
             $this->form_validation->set_rules('contact_number', 'Contact Number', 'required|exact_length[11]|is_unique[account.contact_number]');
             $this->form_validation->set_rules('password', 'Password', 'required');
