@@ -2,7 +2,20 @@
     <div class="row">
         <div class="col-md-6">
             <div class="page-header"><h1><?= $complaint['title'] ?></h1></div>
-
+            <?php if ($infos): ?>
+                <div class="alert alert-info">
+                    <ul>
+                        <li> <?= implode($infos, '</li><li>') ?></li>
+                    </ul>
+                </div>
+            <?php endif; ?>
+            <?php if ($errors): ?>
+                <div class="alert alert-danger">
+                    <ul>
+                        <li> <?= implode($errors, '</li><li>') ?></li>
+                    </ul>
+                </div>
+            <?php endif; ?>
             <table class="table table-striped">
                 <tr>
                     <td>Category</td>
@@ -41,14 +54,14 @@
                     <td>
                         <?php if($complaint['status'] === 'Pending'): ?>
                             <a href="<?= base_url("super-admin/complaint/edit?id={$complaint['id']}")?>" class="btn btn-xs btn-info"><i class="fa fa-pencil"></i>Edit</a>
-                            <a class="btn btn-xs btn-info"><i class="fa fa-check"></i>Accept</a>
-                            <a class="btn btn-xs btn-danger"><i class="fa fa-times"></i>Decline/Delete</a>
+                            <a href="<?= base_url("super-admin/complaint/accept?id={$complaint['id']}")?>" class="btn btn-xs btn-info"><i class="fa fa-check"></i>Accept</a>
+                            <a class="btn btn-xs btn-danger"><i class="fa fa-times"></i>Decline</a>
                         <?php elseif($complaint['status'] === 'Ongoing'): ?>
-                            <a class="btn btn-xs btn-info"><i class="fa fa-pencil"></i>Edit</a>
-                            <a class="btn btn-xs btn-info"><i class="fa fa-check"></i>Mark as Solved</a>
+                            <a href="<?= base_url("super-admin/complaint/edit?id={$complaint['id']}")?>" class="btn btn-xs btn-info"><i class="fa fa-pencil"></i>Edit</a>
+                            <a href="<?= base_url("super-admin/complaint/solved?id={$complaint['id']}")?>" class="btn btn-xs btn-info"><i class="fa fa-check"></i>Mark as Solved</a>
                             <a class="btn btn-xs btn-danger"><i class="fa fa-times"></i>Delete</a>
                         <?php elseif($complaint['status'] === 'Solved'): ?>
-                            <a class="btn btn-xs btn-info"><i class="fa fa-pencil"></i>Edit</a>
+                            <a href="<?= base_url("super-admin/complaint/edit?id={$complaint['id']}")?>" class="btn btn-xs btn-info"><i class="fa fa-pencil"></i>Edit</a>
                             <a class="btn btn-xs btn-danger"><i class="fa fa-times"></i>Delete</a>
                         <?php endif; ?>
                     </td>
