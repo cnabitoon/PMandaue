@@ -2,11 +2,20 @@
     <div class="row">
         <div class="col-md-3">
             <ul class="nav nav-pills nav-stacked">
+                <h3><span class="label label-warning">Complaints</span></h3>
                 <li class="<?php if($type === 'Pending') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("super-admin/complaint?type=pending")?>">Pending</a></li>
                 <li class="<?php if($type === 'Ongoing') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("super-admin/complaint?type=ongoing")?>">Ongoing</a></li>
                 <li class="<?php if($type === 'Solved') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("super-admin/complaint?type=solved")?>">Solved</a></li>
             </ul>
+            <ul class="nav nav-pills nav-stacked">
+                <h3><span class="label label-warning">Archives</span></h3>
+                <li class="<?php if($type === 'Deleted - Declined') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("super-admin/complaint?type=deleted-declined")?>">Deleted - Declined</a></li>
+                <li class="<?php if($type === 'Deleted - Spam') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("super-admin/complaint?type=deleted-spam")?>">Deleted - Spam</a></li>
+                <li class="<?php if($type === 'Deleted - Ongoing') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("super-admin/complaint?type=deleted-ongoing")?>">Deleted - Ongoing</a></li>
+                <li class="<?php if($type === 'Deleted - Solved') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("super-admin/complaint?type=deleted-solved")?>">Deleted - Solved</a></li>
+            </ul>
         </div>
+        
         <div class="col-md-9">
             <?php if ($errors): ?>
                 <div class="alert alert-danger">
@@ -20,6 +29,7 @@
                 <thead>
                     <tr>
                         <th>Title</th>
+                        <th>Image</th>
                         <th>Category</th>
                         <th>Posted on</th>
                         <th>Location</th>
@@ -30,6 +40,7 @@
                     <?php foreach ($complaints as $c): ?>
                         <tr>
                             <td><?= $c['title'] ?></td>
+                            <td><img src="<?= base_url("uploads/{$c['image_filename']}")?>" width="50" height="30"></td>
                             <td>
                                 <?php if( $c['category'] === 'p'):?>
                                     Public Disturbance

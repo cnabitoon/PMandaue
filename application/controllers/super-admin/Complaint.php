@@ -21,7 +21,29 @@ class Complaint extends MY_Controller {
         $this->tab_title = 'View All Complaints';
         $type = ($this->input->get('type') == '') ? 'pending' : $this->input->get('type');
         $complaints = $this->complaint->get_all($type);
-        $this->generate_page('super-admin/complaint', ['complaints' => $complaints, 'type' => ucfirst($type), 'errors' => $errors]);
+        if ($complaints === 'invalid type') {
+            redirect('super-admin/complaint?type=pending');
+        } else {
+            switch ($type) {
+                case 'pending' : $type = 'Pending';
+                    break;
+                case 'ongoing' : $type = 'Ongoing';
+                    break;
+                case 'solved' : $type = 'Solved';
+                    break;
+                case 'deleted-declined' : $type = 'Deleted - Declined';
+                    break;
+                case 'deleted-spam' : $type = 'Deleted - Spam';
+                    break;
+                case 'deleted-ongoing' : $type = 'Deleted - Ongoing';
+                    break;
+                case 'deleted-solved' : $type = 'Deleted - Solved';
+                    break;
+                default: $type = 'Error';
+                    break;
+            }
+            $this->generate_page('super-admin/complaint', ['complaints' => $complaints, 'type' => $type, 'errors' => $errors]);
+        }
     }
 
     public function view() {
@@ -52,7 +74,8 @@ class Complaint extends MY_Controller {
 
     public function edit() {
         $this->tab_title = 'Edit Complaint';
-        $infos = FALSE; $errors = FALSE;
+        $infos = FALSE;
+        $errors = FALSE;
         $id = $this->input->get('id');
         if ($id == '') {
             redirect('super-admin/complaint');
@@ -79,7 +102,7 @@ class Complaint extends MY_Controller {
                 $original_image_filename = $complaint['image_filename'];
                 $complaint = elements(['category', 'title', 'description'], $input);
                 $complaint['id'] = $id;
-                $complaint['image_filename'] = (isset($input['image']))? $input['image'] : $original_image_filename;
+                $complaint['image_filename'] = (isset($input['image'])) ? $input['image'] : $original_image_filename;
                 $complaint['poster_id'] = $this->session->userdata('user_id');
                 $complaint['is_anonymous'] = (int) isset($input['is_anonymous']);
 
@@ -89,24 +112,24 @@ class Complaint extends MY_Controller {
                     $errors = ['Complaint edit failed.'];
                 }
                 $complaint['image_url'] = base_url("uploads/{$complaint['image_filename']}");
-                $this->generate_page('super-admin/complaint-edit', ['complaint' => $complaint, 'infos' => $infos, 'errors' => $errors]);         
+                $this->generate_page('super-admin/complaint-edit', ['complaint' => $complaint, 'infos' => $infos, 'errors' => $errors]);
             }
         }
     }
-    
-    public function accept(){
+
+    public function accept() {
         $id = $this->input->get('id');
         if ($id == '') {
             redirect('super-admin/complaint');
         }
         $complaint = $this->complaint->get($id);
-        
+
         if ($complaint) {
             $success = $this->complaint->accept($id);
-            if($success){
+            if ($success) {
                 $this->session->set_flashdata('infos', ['Status changed to Ongoing.']);
                 redirect("super-admin/complaint/view?id={$id}");
-            }else{
+            } else {
                 $this->session->set_flashdata('errors', ['Complaint cannot be accepted.']);
                 redirect("super-admin/complaint/view?id={$id}");
             }
@@ -114,23 +137,44 @@ class Complaint extends MY_Controller {
             $this->session->set_flashdata('errors', ['Complaint not found.']);
             redirect("super-admin/complaint");
         }
-        
     }
-    
-    public function solved(){
+
+    public function solved() {
         $id = $this->input->get('id');
         if ($id == '') {
             redirect('super-admin/complaint');
         }
         $complaint = $this->complaint->get($id);
-        
+
         if ($complaint) {
             $success = $this->complaint->solved($id);
-            if($success){
+            if ($success) {
                 $this->session->set_flashdata('infos', ['Status changed to Solved.']);
                 redirect("super-admin/complaint/view?id={$id}");
-            }else{
+            } else {
                 $this->session->set_flashdata('errors', ['Complaint cannot be Marked as Solved.']);
+                redirect("super-admin/complaint/view?id={$id}");
+            }
+        } else {
+            $this->session->set_flashdata('errors', ['Complaint not found.']);
+            redirect("super-admin/complaint");
+        }
+    }
+
+    public function delete() {
+        $id = $this->input->get('id');
+        if ($id == '') {
+            redirect('super-admin/complaint');
+        }
+        $complaint = $this->complaint->get($id);
+
+        if ($complaint) {
+            $success = $this->complaint->delete($id);
+            if ($success) {
+                $this->session->set_flashdata('infos', ['Complaint archived.']);
+                redirect("super-admin/complaint/view?id={$id}");
+            } else {
+                $this->session->set_flashdata('errors', ['Complaint cannot be Deleted.']);
                 redirect("super-admin/complaint/view?id={$id}");
             }
         } else {
@@ -154,7 +198,7 @@ class Complaint extends MY_Controller {
         }
         return $errors;
     }
-    
+
     function handle_upload() {
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'jpg|jpeg|png';

@@ -55,14 +55,16 @@
                         <?php if($complaint['status'] === 'Pending'): ?>
                             <a href="<?= base_url("super-admin/complaint/edit?id={$complaint['id']}")?>" class="btn btn-xs btn-info"><i class="fa fa-pencil"></i>Edit</a>
                             <a href="<?= base_url("super-admin/complaint/accept?id={$complaint['id']}")?>" class="btn btn-xs btn-info"><i class="fa fa-check"></i>Accept</a>
-                            <a class="btn btn-xs btn-danger"><i class="fa fa-times"></i>Decline</a>
+                            <a href="<?= base_url("super-admin/complaint/delete?id={$complaint['id']}")?>" class="btn btn-xs btn-danger"><i class="fa fa-times"></i>Decline</a>
                         <?php elseif($complaint['status'] === 'Ongoing'): ?>
                             <a href="<?= base_url("super-admin/complaint/edit?id={$complaint['id']}")?>" class="btn btn-xs btn-info"><i class="fa fa-pencil"></i>Edit</a>
                             <a href="<?= base_url("super-admin/complaint/solved?id={$complaint['id']}")?>" class="btn btn-xs btn-info"><i class="fa fa-check"></i>Mark as Solved</a>
-                            <a class="btn btn-xs btn-danger"><i class="fa fa-times"></i>Delete</a>
+                            <a href="<?= base_url("super-admin/complaint/delete?id={$complaint['id']}")?>" class="btn btn-xs btn-danger"></i>Delete</a>
                         <?php elseif($complaint['status'] === 'Solved'): ?>
                             <a href="<?= base_url("super-admin/complaint/edit?id={$complaint['id']}")?>" class="btn btn-xs btn-info"><i class="fa fa-pencil"></i>Edit</a>
-                            <a class="btn btn-xs btn-danger"><i class="fa fa-times"></i>Delete</a>
+                            <a href="<?= base_url("super-admin/complaint/delete?id={$complaint['id']}")?>" class="btn btn-xs btn-danger"></i>Delete</a>
+                        <?php else: ?>
+                            <span class="label label-warning">Archived</span>
                         <?php endif; ?>
                     </td>
                 </tr>

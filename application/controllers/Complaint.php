@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Complaint extends MY_Controller {
@@ -40,11 +41,9 @@ class Complaint extends MY_Controller {
                 $this->generate_page('complaint-post', ['errors' => $has_errors]);
             } else {
                 $input = $this->input->post();
-                $complaint = elements(['category', 'title', 'description'], $input);
+                $complaint = elements(['category', 'title', 'description', 'latitude', 'longitude'], $input);
                 $complaint['location'] = '';
                 $complaint['barangay'] = '';
-                $complaint['latitude'] = 0;
-                $complaint['longitude'] = 0;
                 $complaint['image_filename'] = $input['image'];
                 $complaint['poster_id'] = $this->session->userdata('user_id');
                 $complaint['is_anonymous'] = (int) isset($input['is_anonymous']);
@@ -64,8 +63,9 @@ class Complaint extends MY_Controller {
         $this->form_validation->set_rules('category', 'Category', 'callback__validate_category');
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('description', 'Description', 'required');
+        $this->form_validation->set_rules('latitude', 'Latitude', 'callback__validate_location');
         if ($this->form_validation->run() == FALSE) {
-             $errors = array_merge($errors, array_values($this->form_validation->error_array()));
+            $errors = array_merge($errors, array_values($this->form_validation->error_array()));
         } else {
             $upload_errors = $this->handle_upload();
             if ($upload_errors) {
@@ -96,11 +96,18 @@ class Complaint extends MY_Controller {
             return ['You must upload an image!'];
         }
     }
-    
-    public function _validate_category($category){
+
+    public function _validate_category($category) {
         $this->form_validation->set_message('_validate_category', 'Please select a valid category.');
         return in_array($category, ['p', 'e', 't']);
     }
 
+    public function _validate_location($latitude) {
+        $this->form_validation->set_message('_validate_location', 'You must tag a location.');
+        if ($latitude == "") {
+            return FALSE;
+        }
+        return TRUE;
+    }
 
 }

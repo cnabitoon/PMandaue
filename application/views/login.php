@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-sm-4 col-sm-offset-4">
-        <div class="panel panel-default">
-            <div class="panel-heading"><i class="glyphicon glyphicon-lock pull-right"></i>Login</div>
+        <div class="panel panel-primary">
+            <div class="panel-heading"><i class="glyphicon glyphicon-log-in pull-right"></i>Log in to start your session</div>
             <form action="<?= base_url('login') ?>" method="POST">
                 <div class="panel-body">
                     <?php if ($infos): ?>
@@ -29,10 +29,8 @@
                     <div class="form-group">
                         <input type="hidden" name="redirect" value="<?= $redirect ?>" class="form-control"/>
                     </div>
-                </div>
-                <div class="panel-footer">
                     <div class="btn-toolbar clearfix">
-                        <button type="submit" class="btn btn-success pull-right">Sign in</button>
+                        <button type="submit" class="btn btn-primary pull-right">Sign in</button>
                     </div>
                 </div>
             </form>

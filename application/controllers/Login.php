@@ -31,14 +31,20 @@ class Login extends MY_Controller {
                     $account['user_id'] = $account['id'];
                     unset($account['id']);
                     $this->session->set_userdata($account);
-                    if ($input['redirect'] === 'complaint-post' && $account['type'] === 'u') {
-                        redirect('complaint/post');
-                    } else if ($input['redirect'] === 'complaint-post' &&
-                            ($account['type'] === 'g' || $account['type'] === 'sa')) {
-                        $this->session->set_flashdata('errors', ['Post Complaint is only available for user accounts.']);
-                        redirect('home');
-                    } else {
-                        redirect();
+
+                    if ($input['redirect'] === 'complaint-post') {
+                        if ($account['type'] === 'u') {
+                            redirect('complaint/post');
+                        } else {
+                            $this->session->set_flashdata('errors', ['Post Complaint is only available for user accounts.']);
+                            redirect();
+                        }
+                    }else{
+                        if($account['type'] === 'sa'){
+                            redirect('super-admin/complaint?type=pending');
+                        }else{
+                            redirect();
+                        }
                     }
                 } else {
                     $this->generate_page('login', ['infos' => $infos, 'errors' => ['Invalid username/password.'], 'redirect' => $input['redirect']]);

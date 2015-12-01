@@ -1,57 +1,34 @@
-<div class="row">
-    <div class="col-sm-6" style="margin:10px;">
-        <image src="<?= base_url('assets/image/map.png') ?>" style="border: 3px solid #999999;"/>
-    </div>	
-    <div class="col-sm-5" style="margin:10px;">
-        <?php if ($infos): ?>
-            <div class="alert alert-info">
-                <ul>
-                    <li> <?= implode($infos, '</li><li>') ?></li>
-                </ul>
+<div id="map"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="page-header">
+                <h1>Environmental Issues</h1>
             </div>
-        <?php endif; ?>
-        <?php if ($errors): ?>
-            <div class="alert alert-danger">
-                <ul>
-                    <li> <?= implode($errors, '</li><li>') ?></li>
-                </ul>
+        </div>
+        <div class="col-md-4">
+            <div class="page-header">
+                <h1>Public Disturbance</h1>
             </div>
-        <?php endif; ?>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="panel panel-default">
-                    <!-- Default panel contents -->
-                    <div class="panel-heading">Emergency Numbers</div>
-
-                    <!-- List group -->
-                    <ul class="list-group">
-                        <li class="list-group-item">ERUF 166</li>
-                        <li class="list-group-item">Fire Department 160</li>
-                        <li class="list-group-item">SWAT 166</li>
-                        <li class="list-group-item">REACT 515-4455</li>
-                        <li class="list-group-item">VECO (Power Sevices) 230-8326</li>
-                        <li class="list-group-item">MCWD (Water Sevices) 412-1836</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="panel panel-default">
-                    <!-- Default panel contents -->
-                    <div class="panel-heading">Announcements</div>
-                    <div class="panel-body">
-                        <p>October 3, 2015</p>
-                        <p>There is a Maintenance on October 23, 2015.</p>
-                    </div>
-                    <div class="panel-body">
-                        <p>September 27, 2015</p>
-                        <p>System was Updated.</p>
-                    </div>
-                    <div class="panel-body">
-                        <p>September 20, 2015</p>
-                        <p>Some of design on website were changed.</p>
-                    </div>
-                </div>
+        </div>
+        <div class="col-md-4">
+            <div class="page-header">
+                <h1>Traffic Issues</h1>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+
+    var map;
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 10.340082451588499, lng: 123.94118785858154},
+            zoom: 15
+        });
+    }
+
+
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBg2S57mj5G0l5y23rVpJsG9uMm_xjwZA&callback=initMap"></script>

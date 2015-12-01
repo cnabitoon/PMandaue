@@ -51,7 +51,7 @@
                 <div class="row">
                     <div class="col-sm-10 text-right">
                         <a class="btn btn-default">Go back</a>
-                        <button type="submit" class="btn btn-success">Sign up!</button>
+                        <button type="submit" class="btn btn-primary">Sign up!</button>
                     </div>
                 </div>
             </form>
