@@ -95,6 +95,7 @@
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 15
         });
+        map.setMapTypeId(google.maps.MapTypeId.HYBRID);
 
         // add click listenser
         google.maps.event.addListener(map, 'click', function (event) {

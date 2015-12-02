@@ -163,13 +163,17 @@ class Complaint extends MY_Controller {
 
     public function delete() {
         $id = $this->input->get('id');
+        $is_spam = $this->input->get('is_spam');
         if ($id == '') {
             redirect('super-admin/complaint');
+        }
+        if($is_spam != 1){
+            $is_spam = 0;
         }
         $complaint = $this->complaint->get($id);
 
         if ($complaint) {
-            $success = $this->complaint->delete($id);
+            $success = $this->complaint->delete($id, $is_spam);
             if ($success) {
                 $this->session->set_flashdata('infos', ['Complaint archived.']);
                 redirect("super-admin/complaint/view?id={$id}");

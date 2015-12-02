@@ -26,6 +26,8 @@
             center: {lat: 10.340082451588499, lng: 123.94118785858154},
             zoom: 15
         });
+        
+        map.setMapTypeId(google.maps.MapTypeId.HYBRID);
     }
 
 

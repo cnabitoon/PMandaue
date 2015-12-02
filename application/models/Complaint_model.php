@@ -32,7 +32,7 @@ class Complaint_model extends CI_Model {
         return $this->db->error();
     }
 
-    public function delete($id) {
+    public function delete($id, $is_spam) {
         $this->db->select('is_deleted');
         $this->db->from('complaint');
         $this->db->where('id', $id);
@@ -41,6 +41,7 @@ class Complaint_model extends CI_Model {
             return FALSE;
         }
         $complaint['is_deleted'] = 1;
+        $complaint['is_spam'] = $is_spam;
         $this->db->where('id', $id);
         $this->db->update('complaint', $complaint);
         return $this->db->error();
