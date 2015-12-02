@@ -46,7 +46,7 @@ class Complaint_model extends CI_Model {
         $this->db->update('complaint', $complaint);
         return $this->db->error();
     }
-    
+
     public function get($id) {
         $this->db->select('category, title, description, location, barangay, image_filename, poster_id');
         $this->db->from('complaint');
@@ -96,10 +96,10 @@ class Complaint_model extends CI_Model {
         $this->db->where('id', $id);
         $complaint = $this->db->get()->row_array();
         $is_deleted = $complaint['is_deleted'];
-        
+
         if ($complaint['is_spam'] == 1) {
             return "Deleted - Spam";
-        } 
+        }
 
         $this->db->select('c.id');
         $this->db->from('complaint AS c');
@@ -132,6 +132,16 @@ class Complaint_model extends CI_Model {
                 }
             }
         }
+    }
+
+    public function get_placemarkers() {
+        //only pending yet
+        $this->db->select('c.latitude, c.longitude');
+        $this->db->from('complaint AS c');
+        $this->db->join('accepted_complaint AS ac', 'ac.complaint_id = c.id', 'left');
+        $this->db->where('is_deleted', 0);
+        $this->db->where('ac.complaint_id IS NULL', FALSE, FALSE);
+        return $this->db->get()->result_array();
     }
 
 }

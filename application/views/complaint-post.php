@@ -13,8 +13,6 @@
                 </div>
             <?php endif; ?>
             <form action="<?= base_url('complaint/post') ?>" method="POST" enctype="multipart/form-data" class="form-horizontal">
-                <input type="hidden" name="latitude"/>
-                <input type="hidden" name="longitude"/>
                 <div class="form-group">
                     <label class="control-label col-sm-3">Category</label>
                     <div class="col-sm-7">
@@ -33,24 +31,9 @@
                         <textarea name="description" class="form-control" rows="4" style="resize: none"><?php echo set_value('description'); ?></textarea>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-3">Latitude</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="latitude" readonly="" class="form-control"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-3">Longitude</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="longitude" readonly="" class="form-control"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-3">Location</label>
-                    <div class="col-sm-7">
-                        <input type="text" name="location" readonly="" class="form-control"/>
-                    </div>
-                </div>
+                <input type="hidden" name="latitude" value=""/>
+                <input type="hidden" name="longitude" value=""/>
+                <input type="hidden" name="location" value=""/>
                 <div class="form-group">
                     <div class="col-sm-7 col-sm-offset-3">
                         <div class="checkbox">
@@ -96,34 +79,64 @@
             zoom: 15
         });
         map.setMapTypeId(google.maps.MapTypeId.HYBRID);
+        map.setOptions({draggableCursor: 'crosshair'});
 
         // add click listenser
         google.maps.event.addListener(map, 'click', function (event) {
-            $('input[name=latitude]').val(event.latLng.lat());
-            $('input[name=longitude]').val(event.latLng.lng());
-            placeMarker(event.latLng);
-            var point = new GlatLng(event.latLng.lat(), event.latLng.lng());
-            var geocoder = new GClientGeocoder();
-            geocoder.getLocations(point, function (result) {
-                // access the address from the placemarks object
-                //alert(result.address);
-                alert (result.address);
+            var latitude = event.latLng.lat();
+            var longitude = event.latLng.lng();
+            var point = new google.maps.LatLng(latitude, longitude);
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({'location': point}, function (results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        var address = results[0].formatted_address;
+                        if (isInMandaueCity(results)) {
+                            $('input[name=latitude]').val(latitude);
+                            $('input[name=longitude]').val(longitude);
+                            $('input[name=location]').val(address);
+                            placeMarker(event.latLng, address);
+                        } else {
+                            window.alert('Location not in Mandaue City');
+                        }
+                    } else {
+                        window.alert('No results found');
+                    }
+                } else {
+                    window.alert('Geocoder failed due to: ' + status);
+                }
             });
         });
 
-        function placeMarker(location) {
+        function placeMarker(location, address) {
             var marker = new google.maps.Marker({
                 position: location,
                 map: map
             });
             clearOverlays();
             markersArray.push(marker);
+            var infowindow = new google.maps.InfoWindow({
+                content: address
+            });
+            infowindow.open(map, marker);
         }
 
         function clearOverlays() {
             for (var i = 0; i < markersArray.length; i++) {
                 markersArray[i].setMap(null);
             }
+        }
+
+        function isInMandaueCity(results) {
+            for (i = 0; i < results.length; i++) {
+                var result = results[i].formatted_address.split(",");
+                for (j = 0; j < result.length; j++) {
+                    if (result[j] == "Mandaue City") {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
 

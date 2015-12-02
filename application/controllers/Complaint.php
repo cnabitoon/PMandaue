@@ -41,8 +41,7 @@ class Complaint extends MY_Controller {
                 $this->generate_page('complaint-post', ['errors' => $has_errors]);
             } else {
                 $input = $this->input->post();
-                $complaint = elements(['category', 'title', 'description', 'latitude', 'longitude'], $input);
-                $complaint['location'] = '';
+                $complaint = elements(['category', 'title', 'description', 'latitude', 'longitude', 'location'], $input);
                 $complaint['barangay'] = '';
                 $complaint['image_filename'] = $input['image'];
                 $complaint['poster_id'] = $this->session->userdata('user_id');

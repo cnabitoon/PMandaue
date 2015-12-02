@@ -8,6 +8,9 @@ class Login extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
+        if ($this->session->userdata('user_id')) {
+            redirect();
+        }
         $this->load->library('form_validation');
     }
 
