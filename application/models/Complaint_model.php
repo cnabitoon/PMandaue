@@ -48,7 +48,7 @@ class Complaint_model extends CI_Model {
     }
 
     public function get($id) {
-        $this->db->select('category, title, description, location, barangay, image_filename, poster_id');
+        $this->db->select('datetime_posted, category, title, description, location, image_filename, poster_id');
         $this->db->from('complaint');
         $this->db->where('id', $id);
         return $this->db->get()->row_array();
@@ -144,4 +144,10 @@ class Complaint_model extends CI_Model {
         return $this->db->get()->result_array();
     }
 
+    public function get_accepted_solved_infos($id){
+        $this->db->select('accepted_by, datetime_accepted, solved_by, datetime_solved');
+        $this->db->from('accepted_complaint');
+        $this->db->where('complaint_id', $id);
+        return $this->db->get()->row_array();
+    }
 }

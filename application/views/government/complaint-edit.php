@@ -16,7 +16,7 @@
                     </ul>
                 </div>
             <?php endif; ?>
-            <form action="<?= base_url("super-admin/complaint/edit?id={$complaint['id']}") ?>" method="POST" enctype="multipart/form-data" class="form-horizontal">
+            <form action="<?= base_url("government/complaint/edit?id={$complaint['id']}") ?>" method="POST" enctype="multipart/form-data" class="form-horizontal">
                 <div class="form-group">
                     <label class="control-label col-sm-3">Category</label>
                     <div class="col-sm-7">

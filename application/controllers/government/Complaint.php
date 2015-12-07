@@ -2,14 +2,14 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-//super-admin
+//government
 class Complaint extends MY_Controller {
 
     protected $tab_title = '';
 
     public function __construct() {
         parent::__construct();
-        if ($this->session->userdata('type') !== 'sa') {
+        if ($this->session->userdata('type') !== 'g') {
             show_error('Unauthorized', "401");
         }
         $this->load->model('Complaint_model', 'complaint');
@@ -17,12 +17,12 @@ class Complaint extends MY_Controller {
     }
 
     public function index() {
-        $this->tab_title = 'Complaints';
+        $this->tab_title = 'View All Complaints';
         $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : FALSE;
         $type = ($this->input->get('type') == '') ? 'pending' : $this->input->get('type');
         $complaints = $this->complaint->get_all($type);
         if ($complaints === 'invalid type') {
-            redirect('super-admin/complaint?type=pending');
+            redirect('government/complaint?type=pending');
         } else {
             switch ($type) {
                 case 'pending' : $type = 'Pending';
@@ -42,7 +42,7 @@ class Complaint extends MY_Controller {
                 default: $type = 'Error';
                     break;
             }
-            $this->generate_page('super-admin/complaint', ['complaints' => $complaints, 'type' => $type, 'errors' => $errors]);
+            $this->generate_page('government/complaint', ['complaints' => $complaints, 'type' => $type, 'errors' => $errors]);
         }
     }
 
@@ -52,7 +52,7 @@ class Complaint extends MY_Controller {
         $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : FALSE;
         $id = $this->input->get('id');
         if ($id == '') {
-            redirect('super-admin/complaint');
+            redirect('government/complaint');
         }
         $complaint = $this->complaint->get($id);
 
@@ -72,10 +72,10 @@ class Complaint extends MY_Controller {
             $complaint['solved_by'] = (isset($accepted_solved_infos['solved_by'])) ? $this->account->get_fullname($accepted_solved_infos['solved_by']) : FALSE;
             $complaint['datetime_solved'] = (isset($accepted_solved_infos['datetime_solved'])) ? $accepted_solved_infos['datetime_solved'] : FALSE;
             $complaint['image_filename'] = base_url("uploads/{$complaint['image_filename']}");
-            $this->generate_page('super-admin/complaint-view', ['complaint' => $complaint, 'infos' => $infos, 'errors' => $errors]);
+            $this->generate_page('government/complaint-view', ['complaint' => $complaint, 'infos' => $infos, 'errors' => $errors]);
         } else {
             $this->session->set_flashdata('errors', ['Complaint not found.']);
-            redirect('super-admin/complaint');
+            redirect('government/complaint');
         }
     }
 
@@ -85,7 +85,7 @@ class Complaint extends MY_Controller {
         $errors = FALSE;
         $id = $this->input->get('id');
         if ($id == '') {
-            redirect('super-admin/complaint');
+            redirect('government/complaint');
         }
 
         $complaint = $this->complaint->get($id);
@@ -94,15 +94,15 @@ class Complaint extends MY_Controller {
             $complaint['image_url'] = base_url("uploads/{$complaint['image_filename']}");
         } else {
             $this->session->set_flashdata('errors', ['Complaint not found.']);
-            redirect('super-admin/complaint');
+            redirect('government/complaint');
         }
 
         if ($this->input->method(TRUE) === 'GET') {
-            $this->generate_page('super-admin/complaint-edit', ['complaint' => $complaint, 'infos' => $infos, 'errors' => $errors]);
+            $this->generate_page('government/complaint-edit', ['complaint' => $complaint, 'infos' => $infos, 'errors' => $errors]);
         } else {
             $has_errors = $this->_validate();
             if ($has_errors) {
-                $this->generate_page("super-admin/complaint-edit", ['complaint' => $complaint, 'infos' => $infos, 'errors' => $has_errors]);
+                $this->generate_page("government/complaint-edit", ['complaint' => $complaint, 'infos' => $infos, 'errors' => $has_errors]);
             } else {
                 $this->load->helper('array');
                 $input = $this->input->post();
@@ -119,7 +119,7 @@ class Complaint extends MY_Controller {
                     $errors = ['Complaint edit failed.'];
                 }
                 $complaint['image_url'] = base_url("uploads/{$complaint['image_filename']}");
-                $this->generate_page('super-admin/complaint-edit', ['complaint' => $complaint, 'infos' => $infos, 'errors' => $errors]);
+                $this->generate_page('government/complaint-edit', ['complaint' => $complaint, 'infos' => $infos, 'errors' => $errors]);
             }
         }
     }
@@ -127,7 +127,7 @@ class Complaint extends MY_Controller {
     public function accept() {
         $id = $this->input->get('id');
         if ($id == '') {
-            redirect('super-admin/complaint');
+            redirect('government/complaint');
         }
         $complaint = $this->complaint->get($id);
 
@@ -135,21 +135,21 @@ class Complaint extends MY_Controller {
             $success = $this->complaint->accept($id);
             if ($success) {
                 $this->session->set_flashdata('infos', ['Status changed to Ongoing.']);
-                redirect("super-admin/complaint/view?id={$id}");
+                redirect("government/complaint/view?id={$id}");
             } else {
                 $this->session->set_flashdata('errors', ['Complaint cannot be accepted.']);
-                redirect("super-admin/complaint/view?id={$id}");
+                redirect("government/complaint/view?id={$id}");
             }
         } else {
             $this->session->set_flashdata('errors', ['Complaint not found.']);
-            redirect("super-admin/complaint");
+            redirect("government/complaint");
         }
     }
 
     public function solved() {
         $id = $this->input->get('id');
         if ($id == '') {
-            redirect('super-admin/complaint');
+            redirect('government/complaint');
         }
         $complaint = $this->complaint->get($id);
 
@@ -157,14 +157,14 @@ class Complaint extends MY_Controller {
             $success = $this->complaint->solved($id);
             if ($success) {
                 $this->session->set_flashdata('infos', ['Status changed to Solved.']);
-                redirect("super-admin/complaint/view?id={$id}");
+                redirect("government/complaint/view?id={$id}");
             } else {
                 $this->session->set_flashdata('errors', ['Complaint cannot be Marked as Solved.']);
-                redirect("super-admin/complaint/view?id={$id}");
+                redirect("government/complaint/view?id={$id}");
             }
         } else {
             $this->session->set_flashdata('errors', ['Complaint not found.']);
-            redirect("super-admin/complaint");
+            redirect("government/complaint");
         }
     }
 
@@ -172,7 +172,7 @@ class Complaint extends MY_Controller {
         $id = $this->input->get('id');
         $is_spam = $this->input->get('is_spam');
         if ($id == '') {
-            redirect('super-admin/complaint');
+            redirect('government/complaint');
         }
         if ($is_spam != 1) {
             $is_spam = 0;
@@ -183,14 +183,14 @@ class Complaint extends MY_Controller {
             $success = $this->complaint->delete($id, $is_spam);
             if ($success) {
                 $this->session->set_flashdata('infos', ['Complaint archived.']);
-                redirect("super-admin/complaint/view?id={$id}");
+                redirect("government/complaint/view?id={$id}");
             } else {
                 $this->session->set_flashdata('errors', ['Complaint cannot be Deleted.']);
-                redirect("super-admin/complaint/view?id={$id}");
+                redirect("government/complaint/view?id={$id}");
             }
         } else {
             $this->session->set_flashdata('errors', ['Complaint not found.']);
-            redirect("super-admin/complaint");
+            redirect("government/complaint");
         }
     }
 

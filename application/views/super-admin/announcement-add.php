@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-sm-4 col-sm-offset-4">
         <div class="panel panel-primary">
-            <div class="panel-heading"><i class="glyphicon glyphicon-log-in pull-right"></i>Log in to start your session</div>
-            <form action="<?= base_url('login') ?>" method="POST">
+            <div class="panel-heading"><i class="glyphicon glyphicon-log-in pull-right"></i>Add Announcement</div>
+            <form action="#" method="POST">
                 <div class="panel-body">
                     <?php if ($infos): ?>
                         <div class="alert alert-info">
@@ -19,18 +19,15 @@
                         </div>
                     <?php endif; ?>
                     <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" name="username" value="<?php echo set_value('username'); ?>" class="form-control" required=""/>
+                        <label>Title</label>
+                        <input type="text" name="title" class="form-control" required=""/>
                     </div>
                     <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" name="password" class="form-control" required=""/>
-                    </div>
-                    <div class="form-group">
-                        <input type="hidden" name="redirect" value="<?= $redirect ?>" class="form-control"/>
+                        <label>Description</label>
+                        <textarea name="description" class="form-control" rows="4" style="resize: none"></textarea>
                     </div>
                     <div class="btn-toolbar clearfix">
-                        <button type="submit" class="btn btn-primary pull-right">Sign in</button>
+                        <button type="submit" class="btn btn-primary pull-right">Submit</button>
                     </div>
                 </div>
             </form>

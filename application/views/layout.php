@@ -31,27 +31,40 @@
 
                         <li class="<?= active_nav_2('complaint', 'post') ?>"><a href="<?= base_url('complaint/post') ?>">Post Complaint</a></li>
                         <?php if ($this->session->userdata('type') === 'sa'): ?>
-                            <li class="<?= active_nav_2('super-admin', 'complaint') ?>">
-                                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    Maintain <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="<?= base_url("super-admin/complaint?type=pending") ?>">Complaints</a></li>
-                                </ul>
-                            </li>
+                        <li class="<?= active_nav_2('super-admin', 'complaint') ?>">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Maintain <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?= base_url("super-admin/complaint?type=pending") ?>">Complaints</a></li>
+                                <li><a href="<?= base_url("super-admin/account") ?>">Accounts</a></li>
+                                <li><a href="<?= base_url("super-admin/miscellaneous") ?>">Miscellaneous</a></li>
+                            </ul>
+                        </li>
+                        <?php elseif ($this->session->userdata('type') === 'g'): ?>
+                        <li class="<?= active_nav_2('government', 'complaint') ?>">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Maintain <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?= base_url("government/complaint?type=pending") ?>">Complaints</a></li>
+                                <li><a href="<?= base_url("government/miscellaneous") ?>">Miscellaneous</a></li>
+                            </ul>
+                        </li>
                         <?php endif; ?>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <?php if (!$this->session->userdata('user_id')): ?>
-                            <li class="<?= active_nav_1('register') ?>"><a href="<?= base_url('register') ?>">Register</a></li>
-                            <li class="<?= active_nav_1('login') ?>"><a href="<?= base_url('login') ?>">Login</a></li>
+                        <li class="<?= active_nav_1('register') ?>"><a href="<?= base_url('register') ?>">Register</a></li>
+                        <li class="<?= active_nav_1('login') ?>"><a href="<?= base_url('login') ?>">Login</a></li>
                         <?php else: ?>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $this->session->userdata('firstname') . ' ' . $this->session->userdata('lastname') ?> <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="<?= base_url('logout') ?>">Logout</a></li>
-                                </ul>
-                            </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $this->session->userdata('firstname') . ' ' . $this->session->userdata('lastname') ?> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">My Account</a></li>
+                                <li><a href="<?= base_url('logout') ?>">Logout</a></li>
+                            </ul>
+                        </li>
 
                         <?php endif; ?>
                     </ul>

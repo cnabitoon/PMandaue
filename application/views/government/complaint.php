@@ -3,16 +3,16 @@
         <div class="col-md-3">
             <ul class="nav nav-pills nav-stacked">
                 <h3><span class="label label-warning">Complaints</span></h3>
-                <li class="<?php if($type === 'Pending') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("super-admin/complaint?type=pending")?>">Pending</a></li>
-                <li class="<?php if($type === 'Ongoing') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("super-admin/complaint?type=ongoing")?>">Ongoing</a></li>
-                <li class="<?php if($type === 'Solved') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("super-admin/complaint?type=solved")?>">Solved</a></li>
+                <li class="<?php if($type === 'Pending') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("government/complaint?type=pending")?>">Pending</a></li>
+                <li class="<?php if($type === 'Ongoing') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("government/complaint?type=ongoing")?>">Ongoing</a></li>
+                <li class="<?php if($type === 'Solved') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("government/complaint?type=solved")?>">Solved</a></li>
             </ul>
             <ul class="nav nav-pills nav-stacked">
                 <h3><span class="label label-warning">Archives</span></h3>
-                <li class="<?php if($type === 'Deleted - Declined') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("super-admin/complaint?type=deleted-declined")?>">Deleted - Declined</a></li>
-                <li class="<?php if($type === 'Deleted - Spam') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("super-admin/complaint?type=deleted-spam")?>">Deleted - Spam</a></li>
-                <li class="<?php if($type === 'Deleted - Ongoing') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("super-admin/complaint?type=deleted-ongoing")?>">Deleted - Ongoing</a></li>
-                <li class="<?php if($type === 'Deleted - Solved') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("super-admin/complaint?type=deleted-solved")?>">Deleted - Solved</a></li>
+                <li class="<?php if($type === 'Deleted - Declined') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("government/complaint?type=deleted-declined")?>">Deleted - Declined</a></li>
+                <li class="<?php if($type === 'Deleted - Spam') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("government/complaint?type=deleted-spam")?>">Deleted - Spam</a></li>
+                <li class="<?php if($type === 'Deleted - Ongoing') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("government/complaint?type=deleted-ongoing")?>">Deleted - Ongoing</a></li>
+                <li class="<?php if($type === 'Deleted - Solved') : echo 'active'; endif; ?>" role="presentation"><a href="<?= base_url("government/complaint?type=deleted-solved")?>">Deleted - Solved</a></li>
             </ul>
         </div>
         
@@ -53,7 +53,7 @@
                             <td><?= datetime_convert($c['datetime_posted']) ?></td>
                             <td><?= $c['location'] ?></td>
                             <td>
-                                <a href="<?= base_url("super-admin/complaint/view?id={$c['id']}")?>" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> View</a>
+                                <a href="<?= base_url("government/complaint/view?id={$c['id']}")?>" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> View</a>
                                 <!--<a class="btn btn-xs btn-danger"><i class   ="fa fa-times"></i> Delete</a>-->
                             </td>
                         </tr>

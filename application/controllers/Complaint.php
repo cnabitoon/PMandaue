@@ -31,14 +31,14 @@ class Complaint extends MY_Controller {
 
         $errors = FALSE;
         if ($this->input->method(TRUE) === 'GET') {
-            $this->generate_page('complaint-post', ['errors' => $errors]);
+            $this->generate_page('user/complaint-post', ['errors' => $errors]);
         } else {
             $this->load->model('Complaint_model', 'complaint');
             $this->load->helper('array');
             $has_errors = $this->validate();
 
             if ($has_errors) {
-                $this->generate_page('complaint-post', ['errors' => $has_errors]);
+                $this->generate_page('user/complaint-post', ['errors' => $has_errors]);
             } else {
                 $input = $this->input->post();
                 $complaint = elements(['category', 'title', 'description', 'latitude', 'longitude', 'location'], $input);
@@ -51,7 +51,7 @@ class Complaint extends MY_Controller {
                     $this->session->set_flashdata('infos', ['Complaint created.']);
                     redirect();
                 } else {
-                    $this->generate_page('complaint-post', ['errors' => 'Complaint creation failed.']);
+                    $this->generate_page('user/complaint-post', ['errors' => 'Complaint creation failed.']);
                 }
             }
         }

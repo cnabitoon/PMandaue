@@ -61,17 +61,17 @@
                     <td>Action</td>
                     <td>
                         <?php if ($complaint['status'] === 'Pending'): ?>
-                            <a href="<?= base_url("super-admin/complaint/edit?id={$complaint['id']}") ?>" class="btn btn-xs btn-info"><i class="fa fa-pencil"></i>Edit</a>
-                            <a href="<?= base_url("super-admin/complaint/accept?id={$complaint['id']}") ?>" class="btn btn-xs btn-info"><i class="fa fa-check"></i>Accept</a>
-                            <a href="<?= base_url("super-admin/complaint/delete?id={$complaint['id']}") ?>" class="btn btn-xs btn-danger"><i class="fa fa-times"></i>Decline</a>
-                            <a href="<?= base_url("super-admin/complaint/delete?id={$complaint['id']}&is_spam=1") ?>" class="btn btn-xs btn-danger"><i class="fa fa-times"></i>Spam</a>
+                            <a href="<?= base_url("government/complaint/edit?id={$complaint['id']}") ?>" class="btn btn-xs btn-info"><i class="fa fa-pencil"></i>Edit</a>
+                            <a href="<?= base_url("government/complaint/accept?id={$complaint['id']}") ?>" class="btn btn-xs btn-info"><i class="fa fa-check"></i>Accept</a>
+                            <a href="<?= base_url("government/complaint/delete?id={$complaint['id']}") ?>" class="btn btn-xs btn-danger"><i class="fa fa-times"></i>Decline</a>
+                            <a href="<?= base_url("government/complaint/delete?id={$complaint['id']}&is_spam=1") ?>" class="btn btn-xs btn-danger"><i class="fa fa-times"></i>Spam</a>
                         <?php elseif ($complaint['status'] === 'Ongoing'): ?>
-                            <a href="<?= base_url("super-admin/complaint/edit?id={$complaint['id']}") ?>" class="btn btn-xs btn-info"><i class="fa fa-pencil"></i>Edit</a>
-                            <a href="<?= base_url("super-admin/complaint/solved?id={$complaint['id']}") ?>" class="btn btn-xs btn-info"><i class="fa fa-check"></i>Mark as Solved</a>
-                            <a href="<?= base_url("super-admin/complaint/delete?id={$complaint['id']}") ?>" class="btn btn-xs btn-danger"></i>Delete</a>
+                            <a href="<?= base_url("government/complaint/edit?id={$complaint['id']}") ?>" class="btn btn-xs btn-info"><i class="fa fa-pencil"></i>Edit</a>
+                            <a href="<?= base_url("government/complaint/solved?id={$complaint['id']}") ?>" class="btn btn-xs btn-info"><i class="fa fa-check"></i>Mark as Solved</a>
+                            <a href="<?= base_url("government/complaint/delete?id={$complaint['id']}") ?>" class="btn btn-xs btn-danger"></i>Delete</a>
                         <?php elseif ($complaint['status'] === 'Solved'): ?>
-                            <a href="<?= base_url("super-admin/complaint/edit?id={$complaint['id']}") ?>" class="btn btn-xs btn-info"><i class="fa fa-pencil"></i>Edit</a>
-                            <a href="<?= base_url("super-admin/complaint/delete?id={$complaint['id']}") ?>" class="btn btn-xs btn-danger"></i>Delete</a>
+                            <a href="<?= base_url("government/complaint/edit?id={$complaint['id']}") ?>" class="btn btn-xs btn-info"><i class="fa fa-pencil"></i>Edit</a>
+                            <a href="<?= base_url("government/complaint/delete?id={$complaint['id']}") ?>" class="btn btn-xs btn-danger"></i>Delete</a>
                         <?php else: ?>
                             <span class="label label-warning">Archived</span>
                         <?php endif; ?>
